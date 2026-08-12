@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ikatan Antarmolekul - ChemInteract</title>
+    <!-- Tailwind CSS for modern responsive UI styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons for visual enhancements -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for interactive boiling point visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Canvas Confetti for interactive quiz rewards -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 40%, #8b5cf6 70%, #ec4899 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+        }
+        /* Custom styled scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation Header -->
+    <header class="gradient-bg text-white shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/20 p-2.5 rounded-2xl backdrop-blur-md shadow-inner">
+                    <i class="fa-solid fa-atom text-2xl text-yellow-300 animate-spin" style="animation-duration: 12s;"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl sm:text-2xl tracking-tight leading-none">Ikatan Antarmolekul</h1>
+                    <p class="text-xs text-indigo-100 font-medium mt-0.5">Disusun oleh: <span class="font-bold text-yellow-300">Farikhah Coretta, S.Pd</span></p>
+                </div>
+            </div>
+            
+            <!-- Navigation Tab Buttons -->
+            <nav class="flex flex-wrap gap-1 bg-white/10 p-1.5 rounded-2xl backdrop-blur-md text-xs sm:text-sm font-semibold">
+                <button onclick="switchTab('materi')" id="btn-materi" class="tab-btn px-3 py-2 rounded-xl transition-all duration-200 bg-white text-indigo-900 shadow">
+                    <i class="fa-solid fa-book-open mr-1.5"></i> Materi Lengkap
+                </button>
+                <button onclick="switchTab('sifat')" id="btn-sifat" class="tab-btn px-3 py-2 rounded-xl transition-all duration-200 text-white hover:bg-white/10">
+                    <i class="fa-solid fa-flask text-yellow-300 mr-1.5"></i> Sifat Fisika
+                </button>
+                <button onclick="switchTab('simulasi')" id="btn-simulasi" class="tab-btn px-3 py-2 rounded-xl transition-all duration-200 text-white hover:bg-white/10">
+                    <i class="fa-solid fa-vial-circle-check text-cyan-300 mr-1.5"></i> Simulasi 2D
+                </button>
+                <button onclick="switchTab('grafik')" id="btn-grafik" class="tab-btn px-3 py-2 rounded-xl transition-all duration-200 text-white hover:bg-white/10">
+                    <i class="fa-solid fa-chart-line text-emerald-300 mr-1.5"></i> Grafik Titik Didih
+                </button>
+                <button onclick="switchTab('aplikasi')" id="btn-aplikasi" class="tab-btn px-3 py-2 rounded-xl transition-all duration-200 text-white hover:bg-white/10">
+                    <i class="fa-solid fa-earth-americas text-pink-300 mr-1.5"></i> Penerapan
+                </button>
+                <button onclick="switchTab('kuis')" id="btn-kuis" class="tab-btn px-3 py-2 rounded-xl transition-all duration-200 text-white hover:bg-white/10">
+                    <i class="fa-solid fa-gamepad text-amber-300 mr-1.5"></i> Evaluasi
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full">
+
+        <!-- TAB 1: MATERI DAN KONSEP LENGKAP -->
+        <section id="tab-materi" class="space-y-8 animate-fadeIn">
+            
+            <!-- Hero Concept Banner -->
+            <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+                <div class="relative z-10 max-w-4xl space-y-3">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="bg-yellow-400 text-slate-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider inline-block">Konsep Dasar Kimia XI</span>
+                        <span class="bg-white/20 backdrop-blur-md text-white font-bold text-xs px-3 py-1 rounded-full inline-block"><i class="fa-solid fa-user-pen mr-1"></i> Penyusun: Farikhah Coretta, S.Pd</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-black leading-tight">Apa itu Ikatan Antarmolekul & Gaya Van der Waals?</h2>
+                    <p class="text-sm sm:text-base text-indigo-100 leading-relaxed">
+                        Di dalam kimia, terdapat dua kategori utama gaya tarik: <strong>Ikatan Intramolekul</strong> (yang mengikat atom-atom di *dalam* molekul) dan <strong>Ikatan Antar Molekul</strong> (gaya tarik elektromagnetik yang terjadi *di antara* molekul-molekul tetangga). Gaya antarmolekul secara kolektif sering dinamakan <strong>Gaya Van der Waals</strong> dan menentukan sifat-sifat fisika materi!
+                    </p>
+                </div>
+                <div class="absolute -right-10 -bottom-10 opacity-15 text-white text-[200px] pointer-events-none">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+            </div>
+
+            <!-- Visual Comparison: Intramolekul vs Antarmolekul -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-indigo-600 hover:shadow-lg transition">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-lg">1</div>
+                        <h3 class="font-extrabold text-lg text-slate-800">Ikatan Intramolekul (Di Dalam)</h3>
+                    </div>
+                    <p class="text-xs text-slate-600 mb-4 leading-relaxed">Gaya kimia kuat yang mengikat atom-atom secara bersamaan membentuk molekul atau senyawa.</p>
+                    <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 text-xs text-indigo-950 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">Contoh:</span> Ikatan Kovalen H–O dalam air, Ikatan Ionik NaCl.
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">Kekuatan:</span> <span class="bg-indigo-200 px-2.5 py-0.5 rounded-md text-indigo-900 font-extrabold">Sangat Kuat (200 - 1000 kJ/mol)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-md border-t-4 border-pink-500 hover:shadow-lg transition">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-pink-100 text-pink-700 flex items-center justify-center font-bold text-lg">2</div>
+                        <h3 class="font-extrabold text-lg text-slate-800">Ikatan Antar Molekul (Di Antara)</h3>
+                    </div>
+                    <p class="text-xs text-slate-600 mb-4 leading-relaxed">Gaya fisika relatif lebih lemah yang bekerja menarik molekul-molekul berdekatan.</p>
+                    <div class="bg-pink-50 p-4 rounded-xl border border-pink-100 text-xs text-pink-950 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">Contoh:</span> Gaya van der Waals, Ikatan Hidrogen antar molekul H<sub>2</sub>O.
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold">Kekuatan:</span> <span class="bg-pink-200 px-2.5 py-0.5 rounded-md text-pink-900 font-extrabold">Relatif Lemah (2 - 40 kJ/mol)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Umbrella Concept: Van der Waals Banner -->
+            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-xl border border-slate-800 space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="p-3 bg-indigo-500/20 text-indigo-400 rounded-xl border border-indigo-500/30">
+                        <i class="fa-solid fa-umbrella text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-extrabold text-white">Gaya Van der Waals (Payung Gaya Antarmolekul)</h3>
+                        <p class="text-xs text-slate-400">Istilah umum untuk gaya tarik elektrostatik antar molekul netral (polar maupun non-polar).</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs pt-2">
+                    <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                        <span class="font-bold text-amber-400 block mb-1">1. Gaya Tarik Dipol - Dipol</span>
+                        <p class="text-slate-300">Antara Molekul Polar & Molekul Polar permanen.</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                        <span class="font-bold text-cyan-400 block mb-1">2. Gaya Dipol - Dipol Terimbas</span>
+                        <p class="text-slate-300">Antara Molekul Polar & Molekul Non-Polar (terinduksi).</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                        <span class="font-bold text-emerald-400 block mb-1">3. Gaya Dispersi London</span>
+                        <p class="text-slate-300">Antara Molekul Non-Polar (Dipol Sesaat - Dipol Terimbas).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Breakdown of 5 Forces Cards -->
+            <h3 class="text-xl font-extrabold text-slate-800 pt-2 border-b border-slate-200 pb-2 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-indigo-600"></i> Klasifikasi 5 Jenis Gaya Antar Molekul
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- 1. Ikatan Hidrogen -->
+                <div class="bg-white rounded-2xl p-5 shadow-md border border-slate-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center text-xl font-black shadow-lg shadow-blue-200">
+                                H
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full">Tipe Khusus</span>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-slate-800">1. Ikatan Hidrogen</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Gaya tarik elektrostatik yang sangat kuat antara atom <strong>H</strong> (yang terikat pada atom sangat elektronegatif: <strong>F, O, N</strong>) dengan Pasangan Elektron Bebas (PEB) milik atom F, O, N dari molekul lain.
+                        </p>
+                    </div>
+                    <div class="pt-4 space-y-3">
+                        <div class="bg-blue-50 p-3 rounded-xl border border-blue-100 text-xs space-y-1">
+                            <p class="font-bold text-blue-950">Contoh Senyawa:</p>
+                            <p class="text-blue-800 font-semibold">H<sub>2</sub>O, HF, NH<sub>3</sub></p>
+                            <p class="font-bold text-blue-950 mt-2">Syarat Utama:</p>
+                            <p class="text-blue-800">Adanya ikatan kovalen H-F, H-O, atau H-N.</p>
+                        </div>
+                        <div class="text-center py-1.5 bg-blue-600 text-white text-xs font-bold rounded-xl shadow-sm">
+                            Kekuatan: ⭐⭐⭐⭐⭐ (Sangat Kuat)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Gaya Ion - Dipol -->
+                <div class="bg-white rounded-2xl p-5 shadow-md border border-slate-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-xl font-black shadow-lg shadow-purple-200">
+                                <i class="fa-solid fa-bolt"></i>
+                            </div>
+                            <span class="bg-purple-100 text-purple-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full">Ion + Polar</span>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-slate-800">2. Gaya Ion - Dipol</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Tarik-menarik antara sebuah **Ion** (Kation + atau Anion -) dengan molekul netral yang bersifat **Polar** (memiliki dipol permanen). Penting dalam proses pelarutan/solvasi.
+                        </p>
+                    </div>
+                    <div class="pt-4 space-y-3">
+                        <div class="bg-purple-50 p-3 rounded-xl border border-purple-100 text-xs space-y-1">
+                            <p class="font-bold text-purple-950">Contoh Senyawa:</p>
+                            <p class="text-purple-800 font-semibold">Garam NaCl dilarutkan dalam H<sub>2</sub>O</p>
+                            <p class="font-bold text-purple-950 mt-2">Mekanisme:</p>
+                            <p class="text-purple-800">Ion Na<sup>+</sup> dikelilingi O (δ<sup>-</sup>), Ion Cl<sup>-</sup> dikelilingi H (δ<sup>+</sup>).</p>
+                        </div>
+                        <div class="text-center py-1.5 bg-purple-600 text-white text-xs font-bold rounded-xl shadow-sm">
+                            Kekuatan: ⭐⭐⭐⭐ (Kuat)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Gaya Tarik Dipol - Dipol -->
+                <div class="bg-white rounded-2xl p-5 shadow-md border border-slate-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl font-black shadow-lg shadow-amber-200">
+                                +-
+                            </div>
+                            <span class="bg-amber-100 text-amber-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full">Polar + Polar</span>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-slate-800">3. Gaya Tarik Dipol - Dipol</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Gaya tarik-menarik antara dua molekul **POLAR** permanen. Kutub positif (δ<sup>+</sup>) satu molekul menarik kutub negatif (δ<sup>-</sup>) dari molekul sebelahnya.
+                        </p>
+                    </div>
+                    <div class="pt-4 space-y-3">
+                        <div class="bg-amber-50 p-3 rounded-xl border border-amber-100 text-xs space-y-1">
+                            <p class="font-bold text-amber-950">Contoh Senyawa:</p>
+                            <p class="text-amber-800 font-semibold">HCl, H<sub>2</sub>S, SO<sub>2</sub>, CH<sub>3</sub>Cl</p>
+                            <p class="font-bold text-amber-950 mt-2">Prinsip:</p>
+                            <p class="text-amber-800">Momen dipol &gt; 0 (distribusi elektron asimetris).</p>
+                        </div>
+                        <div class="text-center py-1.5 bg-amber-500 text-white text-xs font-bold rounded-xl shadow-sm">
+                            Kekuatan: ⭐⭐⭐ (Sedang)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Gaya Dipol - Dipol Terimbas -->
+                <div class="bg-white rounded-2xl p-5 shadow-md border border-slate-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-600 text-white flex items-center justify-center text-xl font-black shadow-lg shadow-cyan-200">
+                                <i class="fa-solid fa-magnet"></i>
+                            </div>
+                            <span class="bg-cyan-100 text-cyan-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full">Polar + Non-Polar</span>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-slate-800">4. Gaya Dipol - Dipol Terimbas</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Terjadi ketika molekul **POLAR** mendekati molekul **NON-POLAR**. Muatan permanen pada molekul polar mengimbas (mendorong/menarik) awan elektron molekul non-polar sehingga menjadi dipol terimbas/terinduksi.
+                        </p>
+                    </div>
+                    <div class="pt-4 space-y-3">
+                        <div class="bg-cyan-50 p-3 rounded-xl border border-cyan-100 text-xs space-y-1">
+                            <p class="font-bold text-cyan-950">Contoh Nyata:</p>
+                            <p class="text-cyan-800 font-semibold">Gas O<sub>2</sub> atau I<sub>2</sub> yang terlarut dalam H<sub>2</sub>O</p>
+                            <p class="font-bold text-cyan-950 mt-2">Fungsi Vital:</p>
+                            <p class="text-cyan-800">Memungkinkan biota laut bernapas dengan O<sub>2</sub> terlarut.</p>
+                        </div>
+                        <div class="text-center py-1.5 bg-cyan-600 text-white text-xs font-bold rounded-xl shadow-sm">
+                            Kekuatan: ⭐⭐ (Agak Lemah)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Gaya Dispersi London -->
+                <div class="bg-white rounded-2xl p-5 shadow-md border border-slate-100 flex flex-col justify-between hover:-translate-y-1 transition duration-200 md:col-span-2 lg:col-span-1">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-xl font-black shadow-lg shadow-emerald-200">
+                                <i class="fa-solid fa-wind"></i>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full">Non-Polar + Non-Polar</span>
+                        </div>
+                        <h4 class="font-extrabold text-lg text-slate-800">5. Gaya Dispersi London</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Gaya antar molekul **NON-POLAR** yang disebabkan oleh pergerakan acak elektron secara spontan, menghasilkan **Dipol Sesaat**, yang kemudian mengimbas molekul di sebelahnya menjadi **Dipol Terimbas**.
+                        </p>
+                    </div>
+                    <div class="pt-4 space-y-3">
+                        <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-100 text-xs space-y-1">
+                            <p class="font-bold text-emerald-950">Contoh Senyawa:</p>
+                            <p class="text-emerald-800 font-semibold">O<sub>2</sub>, N<sub>2</sub>, CH<sub>4</sub>, Gas Mulia (He, Ne, Ar)</p>
+                            <p class="font-bold text-emerald-950 mt-2">Faktor Utama:</p>
+                            <p class="text-emerald-800">Makin besar Mr/ukuran atom, makin mudah terpolarissasi (gaya London makin kuat).</p>
+                        </div>
+                        <div class="text-center py-1.5 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-sm">
+                            Kekuatan: ⭐ (Lemah)
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 2: SIFAT-SIFAT FISIKA YANG DIPENGARUHI -->
+        <section id="tab-sifat" class="hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-lg border border-slate-100 space-y-6">
+                <div>
+                    <span class="bg-yellow-100 text-amber-900 font-extrabold text-xs px-3 py-1 rounded-full uppercase tracking-wider">Aplikasi Konsep Kimia</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mt-2">Sifat-Sifat Fisika Senyawa Akibat Ikatan Antar Molekul</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                        Kekuatan gaya tarik antarmolekul secara langsung mempengaruhi perilaku dan sifat fisika zat dalam kehidupan sehari-hari!
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Sifat 1: Titik Didih & Leleh -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 hover:bg-slate-100/80 transition">
+                        <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-rose-200">
+                            <i class="fa-solid fa-temperature-arrow-up"></i>
+                        </div>
+                        <h3 class="font-extrabold text-base text-slate-800">1. Titik Didih & Titik Leleh</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Makin kuat gaya antarmolekul suatu zat, makin banyak energi kalor yang dibutuhkan untuk memisahkan molekul-molekulnya. 
+                        </p>
+                        <div class="bg-white p-3 rounded-xl text-xs border border-slate-200 font-semibold text-rose-700">
+                            Gaya Kuat (misal H<sub>2</sub>O) &rarr; Titik Didih Tinggi (100 °C)<br>
+                            Gaya Lemah (misal CH<sub>4</sub>) &rarr; Titik Didih Rendah (-161 °C)
+                        </div>
+                    </div>
+
+                    <!-- Sifat 2: Wujud Zat -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 hover:bg-slate-100/80 transition">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-blue-200">
+                            <i class="fa-solid fa-cubes-stacked"></i>
+                        </div>
+                        <h3 class="font-extrabold text-base text-slate-800">2. Wujud Zat pada Suhu Ruang</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Gaya antarmolekul menentukan apakah senyawa berbentuk Padat, Cair, atau Gas pada suhu kamar (25 °C).
+                        </p>
+                        <div class="bg-white p-3 rounded-xl text-xs border border-slate-200 font-semibold text-blue-700">
+                            • Gaya Sangat Kuat / Ionik &rarr; Padatan (NaCl)<br>
+                            • Ikatan Hidrogen &rarr; Cairan (H<sub>2</sub>O)<br>
+                            • Gaya London Lemah &rarr; Gas (O<sub>2</sub>, CH<sub>4</sub>)
+                        </div>
+                    </div>
+
+                    <!-- Sifat 3: Viskositas -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 hover:bg-slate-100/80 transition">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-amber-200">
+                            <i class="fa-solid fa-bottle-droplet"></i>
+                        </div>
+                        <h3 class="font-extrabold text-base text-slate-800">3. Viskositas (Kekentalan)</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Viskositas adalah hambatan cairan untuk mengalir. Cairan dengan gaya antarmolekul yang kuat dan molekul berukuran panjang lebih kental.
+                        </p>
+                        <div class="bg-white p-3 rounded-xl text-xs border border-slate-200 font-semibold text-amber-800">
+                            Gliserol &amp; Madu Memilki banyak gugus -OH (banyak ikatan hidrogen) &rarr; Sangat Kental!
+                        </div>
+                    </div>
+
+                    <!-- Sifat 4: Tegangan Permukaan -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 hover:bg-slate-100/80 transition">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-cyan-200">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <h3 class="font-extrabold text-base text-slate-800">4. Tegangan Permukaan</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Molekul di dalam cairan ditarik ke segala arah, sedangkan molekul di permukaan hanya ditarik ke dalam, membentuk "kulit elastis" di permukaan.
+                        </p>
+                        <div class="bg-white p-3 rounded-xl text-xs border border-slate-200 font-semibold text-cyan-800">
+                            Air memiliki ikatan H kuat &rarr; Tegangan permukaan tinggi (serangga anggang-anggang bisa berjalan di atas air).
+                        </div>
+                    </div>
+
+                    <!-- Sifat 5: Tekanan Uap & Keatsirian -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 hover:bg-slate-100/80 transition">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-purple-200">
+                            <i class="fa-solid fa-cloud"></i>
+                        </div>
+                        <h3 class="font-extrabold text-base text-slate-800">5. Tekanan Uap & Volatilitas</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Semakin lemah gaya antarmolekul, semakin mudah molekul terlepas menjadi gas (mudah menguap/volatil), sehingga tekanan uapnya <strong>semakin tinggi</strong>.
+                        </p>
+                        <div class="bg-white p-3 rounded-xl text-xs border border-slate-200 font-semibold text-purple-800">
+                            Aseton &amp; Alkohol (gaya lebih lemah dari air) &rarr; Sangat mudah menguap &amp; Tekanan uap tinggi.
+                        </div>
+                    </div>
+
+                    <!-- Sifat 6: Kelarutan -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-3 hover:bg-slate-100/80 transition">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-emerald-200">
+                            <i class="fa-solid fa-vial"></i>
+                        </div>
+                        <h3 class="font-extrabold text-base text-slate-800">6. Kelarutan ("Like Dissolves Like")</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Zat polar/ionik larut dalam pelarut polar (interaksi Dipol-Dipol / Ion-Dipol). Zat non-polar larut dalam pelarut non-polar (gaya London).
+                        </p>
+                        <div class="bg-white p-3 rounded-xl text-xs border border-slate-200 font-semibold text-emerald-800">
+                            Minyak (non-polar) TIDAK bisa larut dalam Air (polar) karena jenis gaya antarmolekulnya berbeda!
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: SIMULASI MOLEKUL INTERAKTIF -->
+        <section id="tab-simulasi" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-3xl shadow-lg border border-slate-100">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-6 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-extrabold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-flask-vial text-indigo-600"></i> Simulasi Perilaku Molekul Real-Time
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-1">
+                            Pilih sampel sampel senyawa dan atur suhu lingkungan untuk melihat secara nyata aksi gaya antarmolekul!
+                        </p>
+                    </div>
+
+                    <!-- Preset Buttons -->
+                    <div class="flex flex-wrap gap-2 w-full lg:w-auto">
+                        <button onclick="loadPreset('H2O')" id="preset-H2O" class="sim-preset-btn px-3 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow">
+                            💧 Air (H<sub>2</sub>O) - Hidrogen
+                        </button>
+                        <button onclick="loadPreset('HCl')" id="preset-HCl" class="sim-preset-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                            ⚡ HCl - Dipol-Dipol
+                        </button>
+                        <button onclick="loadPreset('H2O_O2')" id="preset-H2O_O2" class="sim-preset-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                            🌀 H<sub>2</sub>O + O<sub>2</sub> - Dipol Terimbas
+                        </button>
+                        <button onclick="loadPreset('CH4')" id="preset-CH4" class="sim-preset-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                            🔥 Metana (CH<sub>4</sub>) - London
+                        </button>
+                        <button onclick="loadPreset('NaCl_H2O')" id="preset-NaCl_H2O" class="sim-preset-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">
+                            🧂 Garam + Air - Ion Dipol
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <!-- Canvas Interactive Screen -->
+                    <div class="lg:col-span-3 bg-slate-950 rounded-2xl overflow-hidden relative shadow-inner flex flex-col items-center justify-center min-h-[420px]">
+                        <canvas id="simCanvas" class="w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+
+                        <!-- Canvas Legend Overlay -->
+                        <div class="absolute top-3 left-3 bg-slate-900/90 backdrop-blur-md px-3 py-2 rounded-xl text-[11px] text-slate-200 border border-slate-700 space-y-1 pointer-events-none">
+                            <div class="flex items-center gap-2">
+                                <span class="w-4 h-0.5 border-t-2 border-dashed border-cyan-400 inline-block"></span>
+                                <span>Gaya Tarik Antarmolekul</span>
+                            </div>
+                            <div id="sim-legend-info" class="text-cyan-300 font-bold pt-1 border-t border-slate-700">
+                                Mode: Air (Ikatan Hidrogen)
+                            </div>
+                        </div>
+
+                        <!-- Phase Indicator Banner -->
+                        <div class="absolute bottom-3 right-3 bg-indigo-950/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-indigo-500/30 text-xs font-bold text-indigo-200 flex items-center gap-2">
+                            <span>Prediksi Wujud Zat:</span>
+                            <span id="phase-badge" class="px-2.5 py-0.5 rounded-md bg-blue-600 text-white font-black">CAIR</span>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Control Panel -->
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between space-y-6">
+                        <div class="space-y-4">
+                            <h3 class="font-extrabold text-xs text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-sliders text-indigo-600"></i> Kontrol Penguji
+                            </h3>
+
+                            <!-- Temperature Slider -->
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <label class="text-xs font-bold text-slate-700">Suhu Lingkungan:</label>
+                                    <span id="tempVal" class="text-xs font-black text-indigo-600 bg-indigo-100 px-2.5 py-0.5 rounded-md">25 °C</span>
+                                </div>
+                                <input type="range" id="tempSlider" min="-50" max="150" value="25" oninput="updateTemperature(this.value)" class="w-full accent-indigo-600">
+                                <div class="flex justify-between text-[10px] text-slate-400 mt-1 font-bold">
+                                    <span>-50°C (Beku)</span>
+                                    <span>25°C</span>
+                                    <span>150°C (Gas)</span>
+                                </div>
+                            </div>
+
+                            <!-- Show Forces Checkbox -->
+                            <div class="pt-2">
+                                <label class="flex items-center space-x-2 text-xs font-bold text-slate-700 cursor-pointer">
+                                    <input type="checkbox" id="chkShowForces" checked onchange="toggleForces(this.checked)" class="rounded text-indigo-600 focus:ring-indigo-500 w-4 h-4">
+                                    <span>Tampilkan Garis Gaya Tarik</span>
+                                </label>
+                            </div>
+
+                            <!-- Dynamic Description Box -->
+                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 text-xs text-slate-600 leading-relaxed shadow-sm">
+                                <p class="font-bold text-indigo-950 mb-1" id="sim-title-desc">Ikatan Hidrogen pada Air</p>
+                                <p id="sim-body-desc">
+                                    Atom Oksigen yang sangat elektronegatif (δ<sup>-</sup>) menarik atom Hidrogen (δ<sup>+</sup>) milik molekul air tetangganya.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-[11px] text-slate-400 text-center italic">
+                            <i class="fa-solid fa-fire mr-1"></i> Geser slider suhu ke kanan untuk meningkatkan energi kinetik molekul dan memutus ikatan!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: GRAFIK TITIK DIDIH INTERAKTIF -->
+        <section id="tab-grafik" class="hidden space-y-6">
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-lg border border-slate-100">
+                <div class="mb-6">
+                    <span class="bg-pink-100 text-pink-700 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">Bukti Eksperimental</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mt-2">Anomali Titik Didih Senyawa Hidrida Non-Logam</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                        Pelajari bukti nyata tingginya titik didih H<sub>2</sub>O, HF, dan NH<sub>3</sub> akibat keberadaan Ikatan Hidrogen!
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-slate-50 p-4 rounded-2xl border border-slate-200 min-h-[360px]">
+                        <canvas id="boilingChart"></canvas>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 space-y-2">
+                            <h3 class="font-extrabold text-sm text-indigo-950 flex items-center gap-2">
+                                <i class="fa-solid fa-circle-exclamation text-indigo-600"></i> Mengapa Terjadi Anomali?
+                            </h3>
+                            <p class="text-xs text-indigo-900 leading-relaxed">
+                                Secara umum, makin besar <strong>Massa Molekul Relatif (Mr)</strong>, makin kuat gaya Dispersi London sehingga titik didih makin <strong>NAIK</strong> (Lihat tren Golongan IVA: CH<sub>4</sub> &lt; SiH<sub>4</sub> &lt; GeH<sub>4</sub> &lt; SnH<sub>4</sub>).
+                            </p>
+                            <p class="text-xs text-indigo-900 leading-relaxed">
+                                Namun pada H<sub>2</sub>O, HF, dan NH<sub>3</sub>, terdapat **Ikatan Hidrogen** yang sangat kuat, menyebabkan titik didihnya melonjak tajam secara tidak normal!
+                            </p>
+                        </div>
+
+                        <!-- Interactive Filter Options -->
+                        <div class="bg-white p-4 rounded-2xl border border-slate-200 space-y-2">
+                            <p class="text-xs font-bold text-slate-700 mb-1">Filter Tampilan Golongan:</p>
+                            <label class="flex items-center text-xs text-slate-700 gap-2 cursor-pointer">
+                                <input type="checkbox" id="toggle-g4" checked onchange="updateChartVisibility()" class="accent-indigo-600">
+                                <span>Golongan IVA (CH<sub>4</sub>, SiH<sub>4</sub>, GeH<sub>4</sub>, SnH<sub>4</sub>)</span>
+                            </label>
+                            <label class="flex items-center text-xs text-slate-700 gap-2 cursor-pointer">
+                                <input type="checkbox" id="toggle-g5" checked onchange="updateChartVisibility()" class="accent-amber-500">
+                                <span>Golongan VA (NH<sub>3</sub>, PH<sub>3</sub>, AsH<sub>3</sub>, SbH<sub>3</sub>)</span>
+                            </label>
+                            <label class="flex items-center text-xs text-slate-700 gap-2 cursor-pointer">
+                                <input type="checkbox" id="toggle-g6" checked onchange="updateChartVisibility()" class="accent-blue-600">
+                                <span>Golongan VIA (H<sub>2</sub>O, H<sub>2</sub>S, H<sub>2</sub>Se, H<sub>2</sub>Te)</span>
+                            </label>
+                            <label class="flex items-center text-xs text-slate-700 gap-2 cursor-pointer">
+                                <input type="checkbox" id="toggle-g7" checked onchange="updateChartVisibility()" class="accent-emerald-600">
+                                <span>Golongan VIIA (HF, HCl, HBr, HI)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: PENERAPAN KEHIDUPAN SEHARI-HARI -->
+        <section id="tab-aplikasi" class="hidden space-y-6">
+            <div class="text-center max-w-2xl mx-auto mb-6">
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Keajaiban Alam & Technology</span>
+                <h2 class="text-3xl font-black text-slate-800 mt-2">Penerapan Ikatan Antar Molekul</h2>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">
+                    Fenomena menakjubkan di sekitar kita yang terjadi karena prinsip ikatan antarmolekul.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 group">
+                    <div class="h-44 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-6xl relative">
+                        <i class="fa-solid fa-snowflake group-hover:scale-110 transition duration-300"></i>
+                        <span class="absolute bottom-2 left-3 text-xs bg-black/40 backdrop-blur px-2.5 py-0.5 rounded-full text-white font-bold">Anomali Air</span>
+                    </div>
+                    <div class="p-5 space-y-2">
+                        <h3 class="font-extrabold text-base text-slate-800">Mengapa Es Terapung di Atas Air?</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Saat air membeku menjadi es, ikatan hidrogen membentuk struktur heksagonal simetris dengan rongga di tengahnya. Hal ini membuat **massa jenis es lebih kecil daripada air cair**, sehingga es dapat terapung dan menjaga biota bawah laut tetap hidup saat musim dingin!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 group">
+                    <div class="h-44 bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-6xl relative">
+                        <i class="fa-solid fa-bugs group-hover:scale-110 transition duration-300"></i>
+                        <span class="absolute bottom-2 left-3 text-xs bg-black/40 backdrop-blur px-2.5 py-0.5 rounded-full text-white font-bold">Gaya London</span>
+                    </div>
+                    <div class="p-5 space-y-2">
+                        <h3 class="font-extrabold text-base text-slate-800">Rahasia Kaki Cicak Menempel di Dinding</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Kaki cicak memiliki jutaan bulu mikroskopis (*setae*). Kontak permukaan raksasa ini menghasilkan gabungan **Gaya Dispersi London / van der Waals** yang sangat kuat untuk menopang tubuh cicak tanpa perlu perekat cair!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 group">
+                    <div class="h-44 bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white text-6xl relative">
+                        <i class="fa-solid fa-fish-fins group-hover:scale-110 transition duration-300"></i>
+                        <span class="absolute bottom-2 left-3 text-xs bg-black/40 backdrop-blur px-2.5 py-0.5 rounded-full text-white font-bold">Dipol Terimbas</span>
+                    </div>
+                    <div class="p-5 space-y-2">
+                        <h3 class="font-extrabold text-base text-slate-800">Oksigen Terlarut dalam Air Laut</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Meskipun O<sub>2</sub> adalah molekul non-polar dan H<sub>2</sub>O adalah polar, molekul air dapat mengimbas awan elektron O<sub>2</sub> melalui **Gaya Dipol - Dipol Terimbas**. Ini memungkinkan O<sub>2</sub> terlarut dan memberi napas bagi ikan!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: KUIS EVALUASI & MINI GAME -->
+        <section id="tab-kuis" class="hidden space-y-8">
+            <!-- Quiz Container -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-lg border border-slate-100 max-w-3xl mx-auto">
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <span class="text-xs font-black text-indigo-600 uppercase tracking-wider">Uji Pemahaman Siswa</span>
+                        <h2 class="text-xl sm:text-2xl font-black text-slate-800">Kuis Ikatan Antar Molekul</h2>
+                    </div>
+                    <div>
+                        <span id="quiz-score-display" class="text-lg font-black text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-xl">Skor: 0</span>
+                    </div>
+                </div>
+
+                <!-- Progress bar -->
+                <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden mb-6">
+                    <div id="quiz-progress" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full w-0 transition-all duration-300"></div>
+                </div>
+
+                <!-- Quiz Card Area -->
+                <div id="quiz-body" class="space-y-6">
+                    <!-- Dynamic Question Text & Options inserted via JS -->
+                </div>
+
+                <!-- Feedback Banner -->
+                <div id="quiz-feedback" class="hidden p-4 rounded-2xl text-xs sm:text-sm font-medium leading-relaxed"></div>
+
+                <!-- Controls -->
+                <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                    <button id="btn-prev-q" onclick="prevQuestion()" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:bg-slate-100 disabled:opacity-50" disabled>
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Sebelumnya
+                    </button>
+                    <button id="btn-next-q" onclick="nextQuestion()" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-700 shadow-md">
+                        Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mini Matching Game -->
+            <div class="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-xl max-w-3xl mx-auto space-y-4 border border-slate-800">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="bg-yellow-400 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase">Mini Game Tantangan</span>
+                        <h3 class="text-lg font-black mt-1">Jodohkan Pasangan Senyawa dengan Jenis Gaya Antarmolekulnya!</h3>
+                    </div>
+                    <button onclick="resetMatchingGame()" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl text-indigo-200 transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Reset
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2" id="matching-container">
+                    <!-- Matching Items Rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>© 2026 ChemInteract — Ikatan Antarmolekul (Kimia XI SMA).</p>
+            <p class="font-bold text-indigo-900">Disusun oleh: Farikhah Coretta, S.Pd</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ==========================================================================
+           1. TAB NAVIGATION SYSTEM
+           ========================================================================== */
+        function switchTab(tabId) {
+            const tabs = ['materi', 'sifat', 'simulasi', 'grafik', 'aplikasi', 'kuis'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                const btn = document.getElementById(`btn-${t}`);
+                if (t === tabId) {
+                    el.classList.remove('hidden');
+                    btn.className = 'tab-btn px-3 py-2 rounded-xl transition-all duration-200 bg-white text-indigo-900 shadow font-extrabold';
+                } else {
+                    el.classList.add('hidden');
+                    btn.className = 'tab-btn px-3 py-2 rounded-xl transition-all duration-200 text-white hover:bg-white/10 font-semibold';
+                }
+            });
+
+            if (tabId === 'simulasi') {
+                initCanvasIfNeeded();
+            } else if (tabId === 'grafik') {
+                initChartIfNeeded();
+            }
+        }
+
+        /* ==========================================================================
+           2. CANVAS 2D MOLECULAR SIMULATOR
+           ========================================================================== */
+        let canvas, ctx;
+        let animationFrameId;
+        let isCanvasInitialized = false;
+        
+        let currentPreset = 'H2O';
+        let currentTemp = 25; // Celsius
+        let showForces = true;
+        let molecules = [];
+
+        function initCanvasIfNeeded() {
+            if (isCanvasInitialized) return;
+            canvas = document.getElementById('simCanvas');
+            ctx = canvas.getContext('2d');
+            
+            // Set canvas dynamic resolution
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width || 600;
+            canvas.height = rect.height || 420;
+
+            window.addEventListener('resize', () => {
+                if (!canvas) return;
+                const r = canvas.parentElement.getBoundingClientRect();
+                canvas.width = r.width || 600;
+                canvas.height = r.height || 420;
+            });
+
+            isCanvasInitialized = true;
+            loadPreset('H2O');
+            animate();
+        }
+
+        function loadPreset(type) {
+            currentPreset = type;
+            
+            // Highlight button active status
+            document.querySelectorAll('.sim-preset-btn').forEach(btn => {
+                btn.className = 'sim-preset-btn px-3 py-2 rounded-xl text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200';
+            });
+            document.getElementById(`preset-${type}`).className = 'sim-preset-btn px-3 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow';
+
+            const titleEl = document.getElementById('sim-title-desc');
+            const bodyEl = document.getElementById('sim-body-desc');
+            const legendInfo = document.getElementById('sim-legend-info');
+
+            molecules = [];
+            const count = 16;
+
+            if (type === 'H2O') {
+                titleEl.innerHTML = "💧 Ikatan Hidrogen pada Air (H<sub>2</sub>O)";
+                bodyEl.innerHTML = "Atom Oksigen (δ<sup>-</sup>) menarik atom Hidrogen (δ<sup>+</sup>) milik molekul air lain. Ikatan hidrogen antarmolekul ini membutuhkan energi termal tinggi untuk diputus saat mendidih!";
+                legendInfo.innerHTML = "Mode: Air (Ikatan Hidrogen O...H)";
+                
+                for (let i = 0; i < count; i++) {
+                    molecules.push({
+                        type: 'H2O',
+                        x: Math.random() * (canvas.width - 60) + 30,
+                        y: Math.random() * (canvas.height - 60) + 30,
+                        vx: (Math.random() - 0.5) * 1.5,
+                        vy: (Math.random() - 0.5) * 1.5,
+                        angle: Math.random() * Math.PI * 2,
+                        va: (Math.random() - 0.5) * 0.05
+                    });
+                }
+            } else if (type === 'HCl') {
+                titleEl.innerHTML = "⚡ Gaya Tarik Dipol - Dipol pada HCl";
+                bodyEl.innerHTML = "Molekul polar HCl memiliki dipol permanen (H δ<sup>+</sup> dan Cl δ<sup>-</sup>). Kutub positif H menarik kutub negatif Cl molekul lain.";
+                legendInfo.innerHTML = "Mode: HCl (Dipol-Dipol H+...Cl-)";
+
+                for (let i = 0; i < count; i++) {
+                    molecules.push({
+                        type: 'HCl',
+                        x: Math.random() * (canvas.width - 60) + 30,
+                        y: Math.random() * (canvas.height - 60) + 30,
+                        vx: (Math.random() - 0.5) * 1.8,
+                        vy: (Math.random() - 0.5) * 1.8,
+                        angle: Math.random() * Math.PI * 2,
+                        va: (Math.random() - 0.5) * 0.05
+                    });
+                }
+            } else if (type === 'H2O_O2') {
+                titleEl.innerHTML = "🌀 Gaya Dipol - Dipol Terimbas (H<sub>2</sub>O + O<sub>2</sub>)";
+                bodyEl.innerHTML = "Molekul polar H<sub>2</sub>O mengimbas molekul non-polar O<sub>2</sub> sehingga terjadi dipol terimbas yang memungkinkan O<sub>2</sub> terlarut dalam air!";
+                legendInfo.innerHTML = "Mode: Air + Gas Oksigen (Dipol Terimbas)";
+
+                for (let i = 0; i < 10; i++) {
+                    molecules.push({
+                        type: 'H2O',
+                        x: Math.random() * (canvas.width - 60) + 30,
+                        y: Math.random() * (canvas.height - 60) + 30,
+                        vx: (Math.random() - 0.5) * 1.4,
+                        vy: (Math.random() - 0.5) * 1.4,
+                        angle: Math.random() * Math.PI * 2,
+                        va: (Math.random() - 0.5) * 0.04
+                    });
+                }
+                for (let i = 0; i < 6; i++) {
+                    molecules.push({
+                        type: 'O2',
+                        x: Math.random() * (canvas.width - 60) + 30,
+                        y: Math.random() * (canvas.height - 60) + 30,
+                        vx: (Math.random() - 0.5) * 2.0,
+                        vy: (Math.random() - 0.5) * 2.0,
+                        angle: Math.random() * Math.PI * 2,
+                        va: (Math.random() - 0.5) * 0.03
+                    });
+                }
+            } else if (type === 'CH4') {
+                titleEl.innerHTML = "🔥 Gaya Dispersi London pada Metana (CH<sub>4</sub>)";
+                bodyEl.innerHTML = "Molekul non-polar CH<sub>4</sub> saling berinteraksi lewat dipol sesaat & dipol terimbas yang relatif lemah. Sangat mudah menguap pada suhu rendah.";
+                legendInfo.innerHTML = "Mode: CH₄ (Dispersi London)";
+
+                for (let i = 0; i < count; i++) {
+                    molecules.push({
+                        type: 'CH4',
+                        x: Math.random() * (canvas.width - 60) + 30,
+                        y: Math.random() * (canvas.height - 60) + 30,
+                        vx: (Math.random() - 0.5) * 2.2,
+                        vy: (Math.random() - 0.5) * 2.2,
+                        angle: Math.random() * Math.PI * 2,
+                        va: (Math.random() - 0.5) * 0.02
+                    });
+                }
+            } else if (type === 'NaCl_H2O') {
+                titleEl.innerHTML = "🧂 Gaya Ion - Dipol (Pelarutan Garam NaCl dalam Air)";
+                bodyEl.innerHTML = "Ion Kation Na<sup>+</sup> dikelilingi muatan parsial negatif O, sedangkan Anion Cl<sup>-</sup> dikelilingi muatan parsial positif H dari air.";
+                legendInfo.innerHTML = "Mode: Ion-Dipol (Garam + Air)";
+
+                molecules.push({ type: 'Na_ion', x: canvas.width * 0.35, y: canvas.height * 0.5, vx: 0.2, vy: -0.2 });
+                molecules.push({ type: 'Cl_ion', x: canvas.width * 0.65, y: canvas.height * 0.5, vx: -0.2, vy: 0.2 });
+
+                for (let i = 0; i < 12; i++) {
+                    molecules.push({
+                        type: 'H2O',
+                        x: Math.random() * (canvas.width - 60) + 30,
+                        y: Math.random() * (canvas.height - 60) + 30,
+                        vx: (Math.random() - 0.5) * 1.2,
+                        vy: (Math.random() - 0.5) * 1.2,
+                        angle: Math.random() * Math.PI * 2,
+                        va: (Math.random() - 0.5) * 0.05
+                    });
+                }
+            }
+
+            updatePhaseBadge();
+        }
+
+        function updateTemperature(val) {
+            currentTemp = parseInt(val);
+            document.getElementById('tempVal').innerText = `${currentTemp} °C`;
+            updatePhaseBadge();
+        }
+
+        function toggleForces(val) {
+            showForces = val;
+        }
+
+        function updatePhaseBadge() {
+            const badge = document.getElementById('phase-badge');
+            if (currentPreset === 'H2O') {
+                if (currentTemp <= 0) {
+                    badge.innerText = "PADAT (ES)";
+                    badge.className = "px-2.5 py-0.5 rounded-md bg-cyan-400 text-slate-950 font-black";
+                } else if (currentTemp >= 100) {
+                    badge.innerText = "GAS (UAP AIR)";
+                    badge.className = "px-2.5 py-0.5 rounded-md bg-rose-500 text-white font-black";
+                } else {
+                    badge.innerText = "CAIR (AIR)";
+                    badge.className = "px-2.5 py-0.5 rounded-md bg-blue-600 text-white font-black";
+                }
+            } else if (currentPreset === 'HCl') {
+                if (currentTemp <= -85) {
+                    badge.innerText = "PADAT";
+                    badge.className = "px-2.5 py-0.5 rounded-md bg-cyan-400 text-slate-950 font-black";
+                } else {
+                    badge.innerText = "GAS";
+                    badge.className = "px-2.5 py-0.5 rounded-md bg-rose-500 text-white font-black";
+                }
+            } else if (currentPreset === 'CH4') {
+                if (currentTemp <= -161) {
+                    badge.innerText = "CAIR/PADAT";
+                    badge.className = "px-2.5 py-0.5 rounded-md bg-cyan-400 text-slate-950 font-black";
+                } else {
+                    badge.innerText = "GAS";
+                    badge.className = "px-2.5 py-0.5 rounded-md bg-rose-500 text-white font-black";
+                }
+            } else {
+                badge.innerText = "LARUTAN CAIR";
+                badge.className = "px-2.5 py-0.5 rounded-md bg-emerald-600 text-white font-black";
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const tempFactor = Math.max(0.1, (currentTemp + 60) / 80);
+
+            // Move molecules
+            molecules.forEach(m => {
+                m.x += m.vx * tempFactor;
+                m.y += m.vy * tempFactor;
+                if (m.angle !== undefined) m.angle += m.va * tempFactor;
+
+                // Wall collisions
+                if (m.x < 30 || m.x > canvas.width - 30) m.vx *= -1;
+                if (m.y < 30 || m.y > canvas.height - 30) m.vy *= -1;
+            });
+
+            // Draw Force Connection Lines
+            if (showForces) {
+                for (let i = 0; i < molecules.length; i++) {
+                    for (let j = i + 1; j < molecules.length; j++) {
+                        const m1 = molecules[i];
+                        const m2 = molecules[j];
+                        const dx = m2.x - m1.x;
+                        const dy = m2.y - m1.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 110) {
+                            ctx.beginPath();
+                            ctx.lineWidth = 1.5;
+                            ctx.setLineDash([4, 4]);
+
+                            if (m1.type === 'H2O' && m2.type === 'H2O') {
+                                ctx.strokeStyle = 'rgba(56, 189, 248, 0.7)'; // Hydrogen cyan
+                            } else if (m1.type === 'HCl' && m2.type === 'HCl') {
+                                ctx.strokeStyle = 'rgba(251, 191, 36, 0.6)'; // Dipole amber
+                            } else if ((m1.type === 'H2O' && m2.type === 'O2') || (m1.type === 'O2' && m2.type === 'H2O')) {
+                                ctx.strokeStyle = 'rgba(34, 211, 238, 0.8)'; // Dipole-induced dipole
+                            } else if (m1.type === 'CH4' && m2.type === 'CH4') {
+                                ctx.strokeStyle = 'rgba(52, 211, 153, 0.4)'; // London green
+                            } else if ((m1.type.includes('ion') || m2.type.includes('ion')) && (m1.type === 'H2O' || m2.type === 'H2O')) {
+                                ctx.strokeStyle = 'rgba(192, 132, 252, 0.8)'; // Ion-dipole purple
+                            } else {
+                                ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+                            }
+
+                            ctx.moveTo(m1.x, m1.y);
+                            ctx.lineTo(m2.x, m2.y);
+                            ctx.stroke();
+                            ctx.setLineDash([]);
+                        }
+                    }
+                }
+            }
+
+            // Render Molecules Shapes
+            molecules.forEach(m => {
+                ctx.save();
+                ctx.translate(m.x, m.y);
+                if (m.angle) ctx.rotate(m.angle);
+
+                if (m.type === 'H2O') {
+                    // Oxygen Center
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 14, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ef4444';
+                    ctx.fill();
+                    ctx.strokeStyle = '#b91c1c';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '10px sans-serif';
+                    ctx.fillText('δ-', -5, 4);
+
+                    // Hydrogen 1 & 2
+                    ctx.beginPath();
+                    ctx.arc(-13, -11, 7, 0, Math.PI * 2);
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.fill();
+                    ctx.strokeStyle = '#94a3b8';
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(13, -11, 7, 0, Math.PI * 2);
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.fill();
+                    ctx.strokeStyle = '#94a3b8';
+                    ctx.stroke();
+
+                } else if (m.type === 'HCl') {
+                    ctx.beginPath();
+                    ctx.arc(-8, 0, 15, 0, Math.PI * 2);
+                    ctx.fillStyle = '#10b981';
+                    ctx.fill();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '10px sans-serif';
+                    ctx.fillText('Cl', -12, 4);
+
+                    ctx.beginPath();
+                    ctx.arc(10, 0, 8, 0, Math.PI * 2);
+                    ctx.fillStyle = '#38bdf8';
+                    ctx.fill();
+                    ctx.fillStyle = '#0f172a';
+                    ctx.font = '9px sans-serif';
+                    ctx.fillText('H', 7, 3);
+
+                } else if (m.type === 'O2') {
+                    // Oxygen molecule (Non-polar)
+                    ctx.beginPath();
+                    ctx.arc(-8, 0, 10, 0, Math.PI * 2);
+                    ctx.fillStyle = '#38bdf8';
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(8, 0, 10, 0, Math.PI * 2);
+                    ctx.fillStyle = '#38bdf8';
+                    ctx.fill();
+
+                } else if (m.type === 'CH4') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 12, 0, Math.PI * 2);
+                    ctx.fillStyle = '#475569';
+                    ctx.fill();
+
+                    const pos = [[0, -15], [15, 0], [0, 15], [-15, 0]];
+                    pos.forEach(p => {
+                        ctx.beginPath();
+                        ctx.arc(p[0], p[1], 5, 0, Math.PI * 2);
+                        ctx.fillStyle = '#f1f5f9';
+                        ctx.fill();
+                    });
+
+                } else if (m.type === 'Na_ion') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 18, 0, Math.PI * 2);
+                    ctx.fillStyle = '#3b82f6';
+                    ctx.fill();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 11px sans-serif';
+                    ctx.fillText('Na⁺', -11, 4);
+
+                } else if (m.type === 'Cl_ion') {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 22, 0, Math.PI * 2);
+                    ctx.fillStyle = '#22c55e';
+                    ctx.fill();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 11px sans-serif';
+                    ctx.fillText('Cl⁻', -9, 4);
+                }
+
+                ctx.restore();
+            });
+
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        /* ==========================================================================
+           3. CHART.JS BOILING POINT GRAPH
+           ========================================================================== */
+        let boilingChartInstance = null;
+
+        function initChartIfNeeded() {
+            if (boilingChartInstance) return;
+            const ctxChart = document.getElementById('boilingChart').getContext('2d');
+
+            boilingChartInstance = new Chart(ctxChart, {
+                type: 'line',
+                data: {
+                    labels: ['Periode 2', 'Periode 3', 'Periode 4', 'Periode 5'],
+                    datasets: [
+                        {
+                            label: 'Golongan IVA (CH4, SiH4, GeH4, SnH4)',
+                            data: [-161, -112, -88, -52],
+                            borderColor: '#6366f1',
+                            backgroundColor: '#6366f1',
+                            tension: 0.2,
+                            borderWidth: 3,
+                            pointRadius: 6
+                        },
+                        {
+                            label: 'Golongan VA (NH3, PH3, AsH3, SbH3)',
+                            data: [-33, -87, -55, -17],
+                            borderColor: '#f59e0b',
+                            backgroundColor: '#f59e0b',
+                            tension: 0.2,
+                            borderWidth: 3,
+                            pointRadius: 6
+                        },
+                        {
+                            label: 'Golongan VIA (H2O, H2S, H2Se, H2Te)',
+                            data: [100, -60, -41, -2],
+                            borderColor: '#2563eb',
+                            backgroundColor: '#2563eb',
+                            tension: 0.2,
+                            borderWidth: 4,
+                            pointRadius: 8
+                        },
+                        {
+                            label: 'Golongan VIIA (HF, HCl, HBr, HI)',
+                            data: [20, -85, -67, -35],
+                            borderColor: '#10b981',
+                            backgroundColor: '#10b981',
+                            tension: 0.2,
+                            borderWidth: 3,
+                            pointRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { family: 'Plus Jakarta Sans', size: 11 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label.split(' ')[0]} ${context.label}: ${context.raw} °C`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Titik Didih (°C)',
+                                font: { weight: 'bold' }
+                            },
+                            grid: { color: '#e2e8f0' }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Periode Unsur Pusat Dalam Tabel Periodik',
+                                font: { weight: 'bold' }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChartVisibility() {
+            if (!boilingChartInstance) return;
+            boilingChartInstance.setDatasetVisibility(0, document.getElementById('toggle-g4').checked);
+            boilingChartInstance.setDatasetVisibility(1, document.getElementById('toggle-g5').checked);
+            boilingChartInstance.setDatasetVisibility(2, document.getElementById('toggle-g6').checked);
+            boilingChartInstance.setDatasetVisibility(3, document.getElementById('toggle-g7').checked);
+            boilingChartInstance.update();
+        }
+
+        /* ==========================================================================
+           4. QUIZ ENGINE & INTERACTIVE MATCHING GAME
+           ========================================================================== */
+        const quizData = [
+            {
+                q: "Gaya van der Waals merupakan istilah payung yang mencakup jenis gaya antarmolekul berikut, KECUALI...",
+                options: [
+                    "Gaya Dispersi London",
+                    "Gaya Tarik Dipol - Dipol",
+                    "Gaya Dipol - Dipol Terimbas",
+                    "Ikatan Kovalen Intramolekul"
+                ],
+                correct: 3,
+                exp: "Ikatan kovalen adalah ikatan INTRAMOLEKUL (di dalam molekul), sedangkan Gaya van der Waals adalah ikatan ANTAR MOLEKUL."
+            },
+            {
+                q: "Gaya antarmolekul yang bekerja pada molekul-molekul non-polar seperti O2 dan CH4 adalah...",
+                options: [
+                    "Ikatan Hidrogen",
+                    "Gaya Dispersi London (Dipol Sesaat - Dipol Terimbas)",
+                    "Gaya Tarik Dipol - Dipol",
+                    "Gaya Ion - Dipol"
+                ],
+                correct: 1,
+                exp: "Molekul non-polar tidak memiliki dipol permanen. Gaya yang terjadi berasal dari dipol sesaat akibat fluktuasi elektron (Gaya Dispersi London)."
+            },
+            {
+                q: "Interaksi antara molekul POLAR (seperti H2O) dengan molekul NON-POLAR (seperti O2 terlarut) disebut gaya...",
+                options: [
+                    "Dipol - Dipol Terimbas (Terinduksi)",
+                    "Ion - Dipol",
+                    "Ikatan Hidrogen",
+                    "Kovalen Koordinasi"
+                ],
+                correct: 0,
+                exp: "Molekul polar memiliki dipol permanen yang mengimbas/menarik awan elektron molekul non-polar, menghasilkan gaya Dipol - Dipol Terimbas."
+            },
+            {
+                q: "Di antara senyawa berikut, manakah yang DAPAT membentuk ikatan hidrogen antar molekulnya?",
+                options: [
+                    "HCl",
+                    "CH4",
+                    "HF",
+                    "H2S"
+                ],
+                correct: 2,
+                exp: "Ikatan Hidrogen hanya terjadi jika atom H terikat langsung secara kovalen pada atom yang sangat elektronegatif: F, O, atau N. Pada HF, atom H terikat pada F."
+            },
+            {
+                q: "Mengapa titik didih air (H2O = 100 °C) jauh lebih tinggi daripada H2S (-60 °C), padahal H2S memiliki Mr lebih besar?",
+                options: [
+                    "H2O memiliki gaya dispersi London lebih kuat",
+                    "Antar molekul H2O membentuk Ikatan Hidrogen yang sangat kuat",
+                    "Molekul H2S bersifat non-polar",
+                    "H2O mengalami ikatan kovalen raksasa"
+                ],
+                correct: 1,
+                exp: "H2O membentuk jaringan ikatan hidrogen antarmolekul yang kuat sehingga membutuhkan energi kalor tinggi untuk memutuskan ikatan saat mendidih."
+            },
+            {
+                q: "Manakah pernyataan yang BENAR mengenai hubungan gaya antarmolekul dengan kemudahan zat untuk menguap (volatilitas)?",
+                options: [
+                    "Makin kuat gaya antarmolekul, makin mudah menguap",
+                    "Makin lemah gaya antarmolekul, makin tinggi tekanan uapnya (mudah menguap)",
+                    "Gaya antarmolekul tidak mempengaruhi tekanan uap",
+                    "Gaya ion-dipol menyebabkan cairan paling cepat menguap"
+                ],
+                correct: 1,
+                exp: "Semakin lemah gaya antarmolekul, semakin sedikit energi yang dibutuhkan molekul untuk lepas jadi gas (volatil), sehingga tekanan uapnya tinggi."
+            },
+            {
+                q: "Ketika garam dapur (NaCl) dilarutkan dalam air, jenis interaksi utama antara ion Na+ / Cl- dengan molekul air H2O adalah...",
+                options: [
+                    "Gaya Dipol - Dipol",
+                    "Ikatan Hidrogen",
+                    "Gaya Ion - Dipol",
+                    "Gaya Dispersi London"
+                ],
+                correct: 2,
+                exp: "Interaksi antara Ion positif/negatif dengan molekul netral polar (H2O) disebut Gaya Ion - Dipol."
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+        let score = 0;
+        let userAnswers = new Array(quizData.length).fill(null);
+
+        function renderQuestion() {
+            const q = quizData[currentQuestionIdx];
+            const container = document.getElementById('quiz-body');
+            const feedback = document.getElementById('quiz-feedback');
+            
+            feedback.classList.add('hidden');
+
+            // Update Progress bar
+            const progPercent = ((currentQuestionIdx + 1) / quizData.length) * 100;
+            document.getElementById('quiz-progress').style.width = `${progPercent}%`;
+
+            let optionsHTML = '';
+            q.options.forEach((opt, idx) => {
+                const isSelected = userAnswers[currentQuestionIdx] === idx;
+                const btnStyle = isSelected 
+                    ? 'border-indigo-600 bg-indigo-50 text-indigo-900 font-extrabold' 
+                    : 'border-slate-200 hover:border-indigo-300 text-slate-700';
+
+                optionsHTML += `
+                    <button onclick="selectOption(${idx})" class="w-full text-left p-3.5 rounded-xl border-2 transition ${btnStyle} flex items-center justify-between text-xs sm:text-sm">
+                        <span>${opt}</span>
+                        <div class="w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center ${isSelected ? 'bg-indigo-600 border-indigo-600 text-white' : ''}">
+                            ${isSelected ? '<i class="fa-solid fa-check text-[10px]"></i>' : ''}
+                        </div>
+                    </button>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="space-y-4">
+                    <span class="text-xs font-bold text-slate-400">Soal ${currentQuestionIdx + 1} dari ${quizData.length}</span>
+                    <h3 class="font-bold text-base sm:text-lg text-slate-800">${q.q}</h3>
+                    <div class="space-y-2.5">
+                        ${optionsHTML}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('btn-prev-q').disabled = currentQuestionIdx === 0;
+            
+            if (currentQuestionIdx === quizData.length - 1) {
+                document.getElementById('btn-next-q').innerHTML = 'Selesai <i class="fa-solid fa-flag-checkered ml-1"></i>';
+            } else {
+                document.getElementById('btn-next-q').innerHTML = 'Selanjutnya <i class="fa-solid fa-arrow-right ml-1"></i>';
+            }
+
+            if (userAnswers[currentQuestionIdx] !== null) {
+                showExplanation();
+            }
+        }
+
+        function selectOption(idx) {
+            userAnswers[currentQuestionIdx] = idx;
+            renderQuestion();
+            calculateScore();
+        }
+
+        function calculateScore() {
+            score = 0;
+            const ptsPerQ = Math.round(100 / quizData.length);
+            userAnswers.forEach((ans, i) => {
+                if (ans === quizData[i].correct) score += ptsPerQ;
+            });
+            document.getElementById('quiz-score-display').innerText = `Skor: ${score}`;
+        }
+
+        function showExplanation() {
+            const q = quizData[currentQuestionIdx];
+            const uAns = userAnswers[currentQuestionIdx];
+            const feedback = document.getElementById('quiz-feedback');
+
+            feedback.classList.remove('hidden');
+            if (uAns === q.correct) {
+                feedback.className = "p-4 rounded-2xl text-xs sm:text-sm font-medium leading-relaxed bg-emerald-50 border border-emerald-200 text-emerald-900";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 mr-2 text-base"></i> <strong>Benar Sekali!</strong> ${q.exp}`;
+            } else {
+                feedback.className = "p-4 rounded-2xl text-xs sm:text-sm font-medium leading-relaxed bg-rose-50 border border-rose-200 text-rose-900";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 mr-2 text-base"></i> <strong>Kurang Tepat.</strong> Jawaban yang benar adalah <em>"${q.options[q.correct]}"</em>.<br><span class="mt-1 inline-block text-xs">${q.exp}</span>`;
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIdx < quizData.length - 1) {
+                currentQuestionIdx++;
+                renderQuestion();
+            } else {
+                if (score >= 70) {
+                    confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
+                }
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIdx > 0) {
+                currentQuestionIdx--;
+                renderQuestion();
+            }
+        }
+
+        const matchData = [
+            { compound: 'H2O (Air)', type: 'Ikatan Hidrogen' },
+            { compound: 'HCl (Asam Klorida)', type: 'Gaya Tarik Dipol - Dipol' },
+            { compound: 'H2O + O2 (Oksigen Terlarut)', type: 'Gaya Dipol - Dipol Terimbas' },
+            { compound: 'CH4 (Metana)', type: 'Gaya Dispersi London' },
+            { compound: 'Na+ dalam Air', type: 'Gaya Ion - Dipol' }
+        ];
+
+        let matchedPairs = {};
+
+        function renderMatchingGame() {
+            const container = document.getElementById('matching-container');
+            container.innerHTML = '';
+
+            matchData.forEach((item) => {
+                const isMatched = matchedPairs[item.compound] !== undefined;
+
+                container.innerHTML += `
+                    <div class="bg-slate-800 p-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs">
+                        <span class="font-bold text-yellow-300">${item.compound}</span>
+                        <select onchange="checkMatch('${item.compound}', this.value)" ${isMatched ? 'disabled' : ''} class="bg-slate-900 text-white rounded-lg p-1.5 border border-slate-700 text-xs">
+                            <option value="">-- Pilih Jenis Gaya --</option>
+                            <option value="Ikatan Hidrogen" ${matchedPairs[item.compound] === 'Ikatan Hidrogen' ? 'selected' : ''}>Ikatan Hidrogen</option>
+                            <option value="Gaya Tarik Dipol - Dipol" ${matchedPairs[item.compound] === 'Gaya Tarik Dipol - Dipol' ? 'selected' : ''}>Gaya Dipol - Dipol</option>
+                            <option value="Gaya Dipol - Dipol Terimbas" ${matchedPairs[item.compound] === 'Gaya Dipol - Dipol Terimbas' ? 'selected' : ''}>Gaya Dipol - Dipol Terimbas</option>
+                            <option value="Gaya Dispersi London" ${matchedPairs[item.compound] === 'Gaya Dispersi London' ? 'selected' : ''}>Gaya Dispersi London</option>
+                            <option value="Gaya Ion - Dipol" ${matchedPairs[item.compound] === 'Gaya Ion - Dipol' ? 'selected' : ''}>Gaya Ion - Dipol</option>
+                        </select>
+                    </div>
+                `;
+            });
+        }
+
+        function checkMatch(compound, selectedType) {
+            const target = matchData.find(m => m.compound === compound);
+            if (target && target.type === selectedType) {
+                matchedPairs[compound] = selectedType;
+                renderMatchingGame();
+            } else if (selectedType !== '') {
+                renderMatchingGame();
+            }
+        }
+
+        function resetMatchingGame() {
+            matchedPairs = {};
+            renderMatchingGame();
+        }
+
+        // Initialize application on load
+        window.onload = function() {
+            renderQuestion();
+            renderMatchingGame();
+        };
+    </script>
+</body>
+</html>
